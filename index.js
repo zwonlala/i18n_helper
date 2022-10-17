@@ -1,7 +1,9 @@
 import * as fs from 'fs';
+import { extname } from 'path';
 
 //[x] 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
 const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
+const EXT_LIST = ['.ts', '.tsx'];
 
 //[x] 우선 특정 디렉토리 예하에 있는 모든 파일을 다 탐색해야 함
 /**
@@ -12,9 +14,13 @@ function printAllFiles(path) {
     const files = fs.readdirSync(path, { withFileTypes: true });
 
     files.forEach(file => {
-        console.log(file);
 
         if (file.isFile() || !file.isDirectory()) {
+            if (!isTypeScriptBasedFile(file)) {
+                return;
+            }
+
+            console.log(file.name)
             return;
         }
         printAllFiles(`${path}/${file.name}`);
@@ -24,8 +30,16 @@ function printAllFiles(path) {
 printAllFiles(PATH);
 
 
-
-// 스크립트 내 확인하고싶은 파일의 확장자를 미리 정해서 작성한 후 스크립트를 돌릴 수 있어야 함
+//[x] 스크립트 내 확인하고싶은 파일의 확장자를 미리 정해서 작성한 후 스크립트를 돌릴 수 있어야 함
+/**
+ * 타입스크립트 기반 파일인지 판단하는 함수.
+ * 입력받은 파일의 확장자 값이 EXT_LIST 배열내 존재하면 true 값 리턴
+ * @param {fs.Dirent} file 파일 확장자를 검사할 파일
+ */
+function isTypeScriptBasedFile(file) {
+    const extension = extname(file.name);
+    return EXT_LIST.includes(extension);
+}
 
 // (optional) 추출할 언어에 대한 코드 값을 설정후 스크립트를 돌릴 수 있음
 //    - 지금 다시 생각해보니 언어 상관 없이 문자열 값이면 추출하는게 맞는 것 같다는 생각이 든다
