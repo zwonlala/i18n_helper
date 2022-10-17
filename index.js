@@ -27,7 +27,10 @@ function printAllFiles(path) {
              * - 파일 확장자
              * 정보를 가져와야 함
              */
-            console.log(extname(file.name).substring(1), file.name, path);
+            console.log(
+                `\x1b[1m${extname(file.name).substring(1)}\x1b[0m`,
+                `\x1b[33m${file.name}\x1b[0m`,
+                `\x1b[4m${path}\x1b[0m`);
             return;
         }
         printAllFiles(`${path}/${file.name}`);
