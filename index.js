@@ -1,6 +1,29 @@
-// 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
+import * as fs from 'fs';
 
-// 우선 특정 디렉토리 예하에 있는 모든 파일을 다 탐색해야 함
+//[x] 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
+const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
+
+//[x] 우선 특정 디렉토리 예하에 있는 모든 파일을 다 탐색해야 함
+/**
+ * 특정 path 아래 존재하는 모든 파일 목록들을 출력하는 함수
+ * @param {string} path 파일 목록들을 확인하려고 하는 directory 경로
+ */
+function printAllFiles(path) {
+    const files = fs.readdirSync(path, { withFileTypes: true });
+
+    files.forEach(file => {
+        console.log(file);
+
+        if (file.isFile() || !file.isDirectory()) {
+            return;
+        }
+        printAllFiles(`${path}/${file.name}`);
+    });
+}
+
+printAllFiles(PATH);
+
+
 
 // 스크립트 내 확인하고싶은 파일의 확장자를 미리 정해서 작성한 후 스크립트를 돌릴 수 있어야 함
 
