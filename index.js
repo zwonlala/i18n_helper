@@ -31,6 +31,7 @@ function printAllFiles(path) {
                 `\x1b[1m${extname(file.name).substring(1)}\x1b[0m`,
                 `\x1b[33m${file.name}\x1b[0m`,
                 `\x1b[4m${path}\x1b[0m`);
+            readFile(`${path}/${file.name}`);
             return;
         }
         printAllFiles(`${path}/${file.name}`);
@@ -55,7 +56,21 @@ function isTypeScriptBasedFile(file) {
 //    - 지금 다시 생각해보니 언어 상관 없이 문자열 값이면 추출하는게 맞는 것 같다는 생각이 든다
 //      (∵ 영어로만 display 되는 문자열 일 수도 있음)
 
-// 그리고 탐색시 지정한 확장자의 파일만 파일 내용을 검사해야 함
+//[x] 그리고 탐색시 지정한 확장자의 파일만 파일 내용을 검사해야 함
+/**
+ * 입력받은 path에 해당하는 파일을 read 하는 함수
+ * @param {string} path 해당 파일 path
+ */
+function readFile(path) {
+    console.log(`${path}`);
+
+    try {
+        const data = fs.readFileSync(path, { encoding: 'utf-8' });
+        console.log(data);
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 // 원하는 파일을 찾으면 파일의 내용을 라인 바이 라인으로 탐색 ? 을 진행해야 함
 
