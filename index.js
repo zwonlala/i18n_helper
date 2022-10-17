@@ -20,7 +20,14 @@ function printAllFiles(path) {
                 return;
             }
 
-            console.log(file.name)
+            /**
+             * [x] 지정한 파일에서
+             * - 디렉토리 위치
+             * - 파일 명
+             * - 파일 확장자
+             * 정보를 가져와야 함
+             */
+            console.log(extname(file.name).substring(1), file.name, path);
             return;
         }
         printAllFiles(`${path}/${file.name}`);
@@ -46,14 +53,6 @@ function isTypeScriptBasedFile(file) {
 //      (∵ 영어로만 display 되는 문자열 일 수도 있음)
 
 // 그리고 탐색시 지정한 확장자의 파일만 파일 내용을 검사해야 함
-
-/**
- * 지정한 파일에서
- * - 디렉토리 위치
- * - 파일 명
- * - 파일 확장자
- * 정보를 가져와야 함
- */
 
 // 원하는 파일을 찾으면 파일의 내용을 라인 바이 라인으로 탐색 ? 을 진행해야 함
 
