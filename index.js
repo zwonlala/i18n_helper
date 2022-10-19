@@ -8,6 +8,9 @@ const EXT_LIST = ['.ts', '.tsx'];
 // 라인 주석 정규표현식
 const REGEXP_COMMENT_LINE = new RegExp(/\/\/.*/, 'gm');
 
+// 멀티 라인 주석 정규표현식
+const REGEXP_COMMENT_MULTI_LINE = new RegExp(/\/\*([\s\S]*?)\*\//, 'g');
+
 // For TEST
 const DEBUG = false;
 
@@ -113,10 +116,14 @@ function readFile(path) {
  */
 function hasComment(file) {
     const lineCommentList = file.match(REGEXP_COMMENT_LINE);
+    const multiLIneCommentList = file.match(REGEXP_COMMENT_MULTI_LINE);
+
     if (DEBUG) {
-        console.log(lineCommentList);
+        // console.log(lineCommentList);
+        console.log(multiLIneCommentList);
     }
-    return lineCommentList.length !== 0;
+    // return lineCommentList.length !== 0;
+    return multiLIneCommentListc.length !== 0;
 }
 
 /**
@@ -128,7 +135,8 @@ function hasComment(file) {
  * @returns {string} 주석이 제거된 파일 문자열
  */
 function getCommentRemovedFileString(file) {
-    return file.replace(REGEXP_COMMENT_LINE, '');
+    // return file.replace(REGEXP_COMMENT_LINE, '');
+    return file.replace(REGEXP_COMMENT_MULTI_LINE, '');
 }
 
 // 그리고 라인 내용 중에(한글로 이루어진) 문자열을 뽑아내야 함
