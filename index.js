@@ -5,6 +5,12 @@ import { extname } from 'path';
 const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
 const EXT_LIST = ['.ts', '.tsx'];
 
+// 라인 주석 정규표현식
+const REGEXP_COMMENT_LINE = new RegExp(/\/\/.*/, 'gm');
+
+// For TEST
+const DEBUG = false;
+
 //[x] 우선 특정 디렉토리 예하에 있는 모든 파일을 다 탐색해야 함
 /**
  * 특정 path 아래 존재하는 모든 파일 목록들을 출력하는 함수
@@ -66,13 +72,23 @@ function readFile(path) {
 
     try {
         const data = fs.readFileSync(path, { encoding: 'utf-8' });
-        console.log(data);
+
+        const isFileHasComment = hasComment(data);
+        if (isFileHasComment) {
+
+            if (DEBUG) {
+                console.log(data);
+                console.error('================');
+                console.log(`\x1b[33m${getCommentRemovedFileString(data)}\x1b[0m`);
+            }
+        }
     } catch (e) {
         console.log(e);
     }
 }
 
 // 원하는 파일을 찾으면 파일의 내용을 라인 바이 라인으로 탐색 ? 을 진행해야 함
+// -> 생각해보니 주석을 제거하려면 라인 바이 라인이 아닌 전체 파일에서 주석을 제외(필터링)하고 남은 부분에 대해 문자열이 있는지 판단해야 함!
 
 // 소스코드 라인을 탐색할 때는 해당 라인에 대한 정보를 가져와야 함(N 번째 라인)
 
@@ -86,6 +102,34 @@ function readFile(path) {
  * - react 문자열인 경우..?
  */
 
+
+/**
+ * 입력받은 File 문자열에 주석이 존재하는지 판단하는 함수
+ * - 라인 주석 
+ * - 멀티라인 주석
+ * 모두 판단함.
+ * @param {string} file 파일 내용에 주석이 존재하는지 확인할 파일 문자열
+ * @returns {boolean} 파일에 주석이 존재한다면 true 값 리턴
+ */
+function hasComment(file) {
+    const lineCommentList = file.match(REGEXP_COMMENT_LINE);
+    if (DEBUG) {
+        console.log(lineCommentList);
+    }
+    return lineCommentList.length !== 0;
+}
+
+/**
+ * 입력받은 File 문자열에 존재하는 주석을 제거한 문자열을 리턴하는 함수
+ * - 라인 주석 
+ * - 멀티라인 주석
+ * 모두 제거함
+ * @param {string} file 주석을 제거할 파일 문자열
+ * @returns {string} 주석이 제거된 파일 문자열
+ */
+function getCommentRemovedFileString(file) {
+    return file.replace(REGEXP_COMMENT_LINE, '');
+}
 
 // 그리고 라인 내용 중에(한글로 이루어진) 문자열을 뽑아내야 함
 
