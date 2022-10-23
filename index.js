@@ -11,6 +11,18 @@ const REGEXP_COMMENT_LINE = new RegExp(/\/\/.*/, 'gm');
 // 멀티 라인 주석 정규표현식
 const REGEXP_COMMENT_MULTI_LINE = new RegExp(/\/\*([\s\S]*?)\*\//, 'g');
 
+/**
+ * `<div id="sports">축구</div>` 와 같은 문자열에서 "축구"라는 문자열만 추출하는 정규표현식
+ * 
+ * < : < 문자에 매치
+ * \/ : 슬래시 문자
+ * ? : 슬래시가 없거나 하나만 매치
+ * [^>] : '> 이외의 문자'에 매치
+ * + : 위 '> 이외의 문자'를 연속해서 매치
+ * > : '>' 문자에 매치
+ */
+const REGEXP_INNER_TEXT = new RegExp('<\/?[^>]+>', 'ig');
+
 // For TEST
 const DEBUG = false;
 
@@ -82,7 +94,9 @@ function readFile(path) {
             if (DEBUG) {
                 console.log(data);
                 console.error('================');
-                console.log(`\x1b[33m${getCommentRemovedFileString(data)}\x1b[0m`);
+                // console.log(`\x1b[33m${getCommentRemovedFileString(data)}\x1b[0m`);
+				console.log(`\x1b[33m${getInnerTextString(data)}\x1b[0m`);
+
             }
         }
     } catch (e) {
@@ -137,6 +151,15 @@ function hasComment(file) {
 function getCommentRemovedFileString(file) {
     // return file.replace(REGEXP_COMMENT_LINE, '');
     return file.replace(REGEXP_COMMENT_MULTI_LINE, '');
+}
+
+/**
+ * 입력받은 File 문자열에 존재하는 태그 사이의 innerText 문자열만 리턴하는 함수
+ * @param {string} file innerText 값을 추출한 파일 문자열
+ * @returns {string} tag 사이에 적용된 innerText 문자열들
+ */
+function getInnerTextString(file) {
+    return file.replace(REGEXP_INNER_TEXT, '');
 }
 
 // 그리고 라인 내용 중에(한글로 이루어진) 문자열을 뽑아내야 함
