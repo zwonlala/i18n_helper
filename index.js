@@ -137,7 +137,7 @@ function hasComment(file) {
         console.log(multiLIneCommentList);
     }
     // return lineCommentList.length !== 0;
-    return multiLIneCommentListc.length !== 0;
+    return multiLIneCommentList?.length !== 0;
 }
 
 /**
