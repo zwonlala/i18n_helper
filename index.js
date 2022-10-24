@@ -33,7 +33,19 @@ const REGEXP_INNER_TEXT = new RegExp('<\/?[^>]+>', 'igm');
  * * : 위 '보이는 문자 | 보이지 않는 문자' 0회 이상 매치
  * <\/body : '</body' 문자열에 매치
  */
- const REGEXP_BODY_TAG_INNER_TEXT = /<body[\S|\s]*<\/body/igm;
+const REGEXP_BODY_TAG_INNER_TEXT = /<body[\S|\s]*<\/body/igm;
+
+
+// 따옴표 문자열 식별하는 정규표현식
+const REGEXP_STRING_SINGLE = /'[\S| ]*'/gm;
+
+// 쌍 따옴표 문자열 식별하는 정규표현식
+const REGEXP_STRING_DOUBLE = /"[\S| ]*"/gm;
+
+// 템플릿 리터럴 문자열 식별하는 정규표현식
+const REGEXP_STRING_TEMPLATE = /`[\S| ]*`/gm;
+
+const REGEXP_HAS_KOREAN = /[[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
 // For TEST
 const DEBUG = false;
