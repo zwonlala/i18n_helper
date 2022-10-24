@@ -191,6 +191,28 @@ function getInnerTextString(file) {
     return x;
 }
 
-// 그리고 라인 내용 중에(한글로 이루어진) 문자열을 뽑아내야 함
+//[x] 그리고 라인 내용 중에(한글로 이루어진) 문자열을 뽑아내야 함
+/**
+ * 해당 라인에 한국어가 포함된 문자열이 존재하는 경우 해당 문자열을 리턴하는 함수
+ * @param {string} line
+ * @returns 한국어가 포함된 문자열이 포함된 경우 해당 문자열 리턴
+ */
+function getKoreanContainedStringFromLine(line) {
+    const singleString = line.match(REGEXP_STRING_SINGLE);
+    if (singleString && REGEXP_HAS_KOREAN.test(singleString)) {
+        return singleString;
+    }
+
+    const doubleString = line.match(REGEXP_STRING_DOUBLE);
+    if (doubleString && REGEXP_HAS_KOREAN.test(doubleString)) {
+        return doubleString;
+    }
+
+    const templateLiteral = line.match(REGEXP_STRING_TEMPLATE);
+    if (templateLiteral && REGEXP_HAS_KOREAN.test(templateLiteral)) {
+        return templateLiteral;
+    }
+}
 
 // 해당 파일, 라인 번호, 추출한(한글) 문자열
+
