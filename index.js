@@ -91,27 +91,22 @@ function isTypeScriptBasedFile(file) {
 
 //[x] 그리고 탐색시 지정한 확장자의 파일만 파일 내용을 검사해야 함
 /**
- * 입력받은 path에 해당하는 파일을 read 하는 함수
+ * 입력받은 path에 해당하는 파일을 read 하여
+ * 주석을 제거한 파일 부분만을
+ * 라인 별로 나누어 배열로 리턴하는 함수
  * @param {string} path 해당 파일 path
  */
-function readFile(path) {
-    console.log(`${path}`);
-
+function getFileLineListExceptComment(path) {
     try {
         const data = fs.readFileSync(path, { encoding: 'utf-8' });
 
-        // const isFileHasComment = hasComment(data);
-        // if (isFileHasComment) {
+        const isFileHasComment = hasComment(data);
 
-        //     if (DEBUG) {
-        //         console.log(data);
-        //         console.error('================');
-        //         // console.log(`\x1b[33m${getCommentRemovedFileString(data)}\x1b[0m`);
-		// 		console.log(`\x1b[33m${getInnerTextString(data)}\x1b[0m`);
+        const commentFilteredData = isFileHasComment
+            ? getCommentRemovedFileString(data)
+            : data;
 
-        //     }
-        // }
-        getInnerTextString(data);
+        return commentFilteredData.split('\n');;
     } catch (e) {
         console.log(e);
     }
