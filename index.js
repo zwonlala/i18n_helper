@@ -165,8 +165,9 @@ function hasComment(file) {
  * @returns {string} 주석이 제거된 파일 문자열
  */
 function getCommentRemovedFileString(file) {
-    // return file.replace(REGEXP_COMMENT_LINE, '');
-    return file.replace(REGEXP_COMMENT_MULTI_LINE, '');
+    return file
+        .replace(REGEXP_COMMENT_LINE, '') // 라인 주석 제거
+        .replace(REGEXP_COMMENT_MULTI_LINE, ''); // 멀티라인 주석 제거
 }
 
 /**
