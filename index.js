@@ -76,7 +76,15 @@ function printAllFiles(path) {
                 `\x1b[1m${extname(file.name).substring(1)}\x1b[0m`,
                 `\x1b[33m${file.name}\x1b[0m`,
                 `\x1b[4m${path}\x1b[0m`);
-            readFile(`${path}/${file.name}`);
+            const commentFilteredFileLineList = getFileLineListExceptComment(`${path}/${file.name}`);
+            commentFilteredFileLineList.forEach((line, idx) => {
+                const koreanString = getKoreanContainedStringFromLine(line);
+                if (koreanString) {
+
+                    //[x] 해당 파일, 라인 번호, 추출한(한글) 문자열
+                    console.log(`${file.name}//line:${idx+1}//${koreanString}`);
+                }
+            })
             return;
         }
         printAllFiles(`${path}/${file.name}`);
@@ -157,7 +165,7 @@ function hasComment(file) {
         console.log(multiLineCommentList);
     }
 
-    const hasLineComment = lineCommentList.length !== 0;
+    const hasLineComment = lineCommentList?.length !== 0;
     const hasMultilineComment = multiLineCommentList?.length !== 0;
 
     return hasLineComment || hasMultilineComment;
@@ -213,6 +221,4 @@ function getKoreanContainedStringFromLine(line) {
         return templateLiteral;
     }
 }
-
-// 해당 파일, 라인 번호, 추출한(한글) 문자열
 
