@@ -2,9 +2,10 @@ import * as fs from 'fs';
 import { extname } from 'path';
 
 //[x] 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
-const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
-// const EXT_LIST = ['.ts', '.tsx'];
-const EXT_LIST = ['.ejs'];
+// const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
+const PATH = '/Users/jiwonsong/Documents/workspace/miricanvas-web/src/editor';
+
+const EXT_LIST = ['.ts', '.tsx'];
 
 // 라인 주석 정규표현식
 const REGEXP_COMMENT_LINE = new RegExp(/\/\/.*/, 'gm');
