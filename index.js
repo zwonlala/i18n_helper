@@ -143,14 +143,17 @@ function readFile(path) {
  */
 function hasComment(file) {
     const lineCommentList = file.match(REGEXP_COMMENT_LINE);
-    const multiLIneCommentList = file.match(REGEXP_COMMENT_MULTI_LINE);
+    const multiLineCommentList = file.match(REGEXP_COMMENT_MULTI_LINE);
 
     if (DEBUG) {
-        // console.log(lineCommentList);
-        console.log(multiLIneCommentList);
+        console.log(lineCommentList);
+        console.log(multiLineCommentList);
     }
-    // return lineCommentList.length !== 0;
-    return multiLIneCommentList?.length !== 0;
+
+    const hasLineComment = lineCommentList.length !== 0;
+    const hasMultilineComment = multiLineCommentList?.length !== 0;
+
+    return hasLineComment || hasMultilineComment;
 }
 
 /**
