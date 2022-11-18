@@ -17,7 +17,20 @@ const PATH = '/Users/jiwonsong/Documents/workspace/miricanvas-web/src/editor';
 
 const EXT_LIST = ['.ts', '.tsx'];
 
-
+/**
+ * 스프레드 시트에 업로드할 행 데이터를 저장하는 배열
+ *
+ *  {
+ *      extension: 'ts',
+ *      name: 'ReactDomView',
+ *      location: 'src/editor/view/',
+ *      line: '23',
+ *      korString: '집에가고파'
+ *  }
+ *
+ * 위 와 같은 object 형태로 이루어진 값들로 이루어진 배열이어야 함!
+ */
+const uploadDataList = [];
 
 // For TEST
 const DEBUG = false;
@@ -44,17 +57,14 @@ function printAllFiles(path) {
              * - 파일 확장자
              * 정보를 가져와야 함
              */
-            console.log(
-                `\x1b[1m${extname(file.name).substring(1)}\x1b[0m`,
-                `\x1b[33m${file.name}\x1b[0m`,
-                `\x1b[4m${path}\x1b[0m`);
             const commentFilteredFileLineList = getFileLineListExceptComment(`${path}/${file.name}`);
             commentFilteredFileLineList.forEach((line, idx) => {
                 const koreanString = getKoreanContainedStringFromLine(line);
                 if (koreanString) {
 
                     //[x] 해당 파일, 라인 번호, 추출한(한글) 문자열
-                    console.log(`${file.name}//line:${idx+1}//${koreanString}`);
+                    const rowData = getSpreadSheetRowDataFromFile(file, path, idx+1, koreanString[0]);
+                    uploadDataList.push(rowData);
                 }
             })
             return;
