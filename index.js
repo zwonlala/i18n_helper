@@ -90,9 +90,21 @@ function uploadToSpreadSheet() {
     console.log('스프레드 시트 업로드 끝!');
 }
 
+function makeToJSONFile() {
+    const saveData = uploadDataList.reduce((acc, cur, idx) => {
+        const idxString = idx.toString();
+        // cur[idxString] = acc;
+        acc[idxString] = cur
+        return acc;
+    }, {});
+    const jsonSaveData = JSON.stringify(saveData);
+    fs.writeFileSync('korData.json', jsonSaveData);
+}
+
 function findAllKorStringAndUploadToSpreadSheet() {
     finAllKorString();
-    uploadToSpreadSheet();
+    // uploadToSpreadSheet();
+    makeToJSONFile();
 }
 
 findAllKorStringAndUploadToSpreadSheet();
