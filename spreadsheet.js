@@ -28,7 +28,7 @@ async function addRow(sheet, extension, name, location, line, korString) {
     await newRow.save();
 }
 
-async function upload(fileDataList) {
+export async function upload(fileDataList) {
     const document = await loadDocument();
     const sheet = document.sheetsById[process.env.SPREAD_SHEET_ID];
 
