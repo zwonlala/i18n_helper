@@ -194,3 +194,12 @@ function getKoreanContainedStringFromLine(line) {
     }
 }
 
+function getSpreadSheetRowDataFromFile(file, path, lineNumber, koreanString) {
+    return {
+        extension: extname(file.name).substring(1),
+        name: file.name,
+        location: path,
+        line: lineNumber,
+        korString: koreanString
+    };
+}
