@@ -53,7 +53,6 @@ function printAllFiles(path) {
             }
 
             if (isTestFile(file)) {
-                console.log(file.name);
                 return;
             }
 
