@@ -37,7 +37,7 @@ const REGEXP_STRING_DOUBLE = /"[\S| ]*"/gm;
 // 템플릿 리터럴 문자열 식별하는 정규표현식
 const REGEXP_STRING_TEMPLATE = /`[\S| ]*`/gm;
 
-const REGEXP_HAS_KOREAN = /[[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+const REGEXP_HAS_KOREAN = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
 
 export {
     REGEXP_COMMENT_LINE,
