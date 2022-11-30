@@ -13,9 +13,11 @@ import {
 
 //[x] 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
 // const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
-const PATH = '/Users/jiwonsong/Documents/workspace/miricanvas-web/src/editor';
+// const PATH = '/Users/jiwonsong/Documents/workspace/miricanvas-web/src/editor';
+const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src/editor' // office
 
 const EXT_LIST = ['.ts', '.tsx'];
+const EXCEPT_EXT_LINT = ['.test.ts'];
 
 /**
  * 스프레드 시트에 업로드할 행 데이터를 저장하는 배열
@@ -47,6 +49,11 @@ function printAllFiles(path) {
 
         if (file.isFile() || !file.isDirectory()) {
             if (!isTypeScriptBasedFile(file)) {
+                return;
+            }
+
+            if (isTestFile(file)) {
+                console.log(file.name);
                 return;
             }
 
@@ -112,6 +119,21 @@ findAllKorStringAndUploadToSpreadSheet();
 function isTypeScriptBasedFile(file) {
     const extension = extname(file.name);
     return EXT_LIST.includes(extension);
+}
+
+/**
+ * 테스트 파일(~test.ts) 인지 판단하는 함수.
+ * 입력받은 파일 이름에 'test.ts' 이라는 문자열이 존재하면 true 값 리턴함
+ * @param {fs.Dirent} file 테스트 파일인지 검사할 파일
+ * @returns 
+ */
+function isTestFile(file) {
+    return EXCEPT_EXT_LINT.some(
+        exceptStr => {
+            const index = String(file.name).indexOf(exceptStr);
+            return index !== -1
+        }
+    )
 }
 
 // (optional) 추출할 언어에 대한 코드 값을 설정후 스크립트를 돌릴 수 있음
