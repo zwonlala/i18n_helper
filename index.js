@@ -10,7 +10,6 @@ import {
     REGEXP_STRING_TEMPLATE,
     REGEXP_HAS_KOREAN
 } from './regExp.js';
-import { upload } from './spreadsheet.js';
 
 //[x] 특정 path 아래에 있는 모든 파일을 확인할 수 있어야 함.
 // const PATH = '/Users/jiwonsong/Documents/miricanvas-web/src';
@@ -64,7 +63,7 @@ function printAllFiles(path) {
                 if (koreanString) {
 
                     //[x] 해당 파일, 라인 번호, 추출한(한글) 문자열
-                    const rowData = getSpreadSheetRowDataFromFile(file, path, idx+1, koreanString[0]);
+                    const rowData = getSpreadSheetRowDataFromFile(file, path, idx + 1, koreanString[0]);
                     uploadDataList.push(rowData);
                 }
             })
@@ -82,12 +81,6 @@ function finAllKorString() {
     if (DEBUG) {
         console.log(uploadDataList);
     }
-}
-
-function uploadToSpreadSheet() {
-    console.log('스프레드 시트 업로드 시작!');
-    upload(uploadDataList);
-    console.log('스프레드 시트 업로드 끝!');
 }
 
 function makeToJSONFile() {
@@ -108,7 +101,7 @@ function findAllKorStringAndUploadToSpreadSheet() {
 }
 
 findAllKorStringAndUploadToSpreadSheet();
-    
+
 
 //[x] 스크립트 내 확인하고싶은 파일의 확장자를 미리 정해서 작성한 후 스크립트를 돌릴 수 있어야 함
 /**
